@@ -21,7 +21,7 @@
     height: 100%;
     outline: none;
   }
-  
+
   #container {
     width: 100%;
     height: 100%;
@@ -29,10 +29,28 @@
     cursor: url('cursor.svg') 7.5 7.5, auto;
   }
 
+  .title {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: system-ui, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 35px;
+    color: #FBFBFD;
+    flex-direction: column;
+    opacity: 0.8;
+  }
+
 </style>
 
 <body>
   <div id='container'>
+    <div class="title">
+      <p>Spin me!</p>
+    </div>
     <canvas id="canvas3d"></canvas>
   </div>
 
