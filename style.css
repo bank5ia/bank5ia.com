@@ -45,17 +45,20 @@ h1 {
 	font-family: 'Garamond', serif !important; 
 	font-size: 40px;
 	font-weight: 500;
+	cursor: default;
 }
 
 img {
 	transform: translateX(70px) translateY(-8px);
 	pointer-events: none;
+	cursor: default;
 }
 
 h3 {
 	font-family: 'Garamond', serif !important; 
 	font-size: 18px;
 	font-weight: 500;
+	cursor: default;
 }
 
 div {
