@@ -1,0 +1,199 @@
+<html>
+<head>
+	<title>My Products / Bank5ia</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<style type="text/css">
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	background-color: rgb(15, 15, 15);
+	font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+	color: white;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	perspective: 800px;
+}
+
+#left-back, #right-back {
+	width: 200px;
+	height: 200px;
+	position: absolute;
+}
+
+#left-front, #right-front {
+	width: 200px;
+	height: 200px;
+}
+
+.outer-container {
+	padding: 80px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.product-title {
+	font-size: 50px;
+	font-weight: 500;
+	margin-top: 25px;
+}
+
+.product-subtitle {
+	font-size: 20px;
+	font-weight: 500;
+	margin-top: 15px;
+	margin-bottom: 80px;
+}
+
+.product-button {
+	cursor: pointer;
+}
+
+#chariz, #havoc {
+	display: block;
+	width: 200px;
+}
+
+#chariz-hover, #havoc-hover {
+	display: none;
+	width: 200px;
+}
+
+</style>
+<body>
+	<div class="outer-container">
+		<div class="container" id="left">
+			<img id="left-back" src="Assets/Sydney Background.svg" width="200" height="200">
+			<img id="left-front" src="Assets/Sydney Glyph.svg" width="200" height="200">
+		</div>
+		<p class="product-title">Sydney</p>
+		<p class="product-subtitle"><i>Customize your Pay Cards</i></p>
+		<a id="chariz-hover" class="product-button" href="https://havoc.app/package/iosx"><img src="Assets/chariz-hover.svg" width="200" height="73"></a>
+		<a id="chariz" class="product-button" href="https://chariz.com/get/sydney"><img src="Assets/chariz.svg" width="200" height="73"></a>
+	</div>
+	<div class="outer-container">
+		<div class="container" id="right">
+			<img id="right-back" src="Assets/iOSX Background.svg" width="200" height="200">
+			<img id="right-front" src="Assets/iOSX Glyph.svg" width="200" height="200">
+		</div>
+		<p class="product-title">iOSX</p>
+		<p class="product-subtitle"><i>iOS with a hint of MacOS</i></p>
+		<a id="havoc-hover" class="product-button" href="https://havoc.app/package/iosx"><img src="Assets/havoc-hover.svg" width="200" height="73"></a>
+		<a id="havoc" class="product-button" href="https://havoc.app/package/iosx"><img src="Assets/havoc.svg" width="200" height="73"></a>
+	</div>
+
+<script type="text/javascript">
+
+var height = $(window).height();
+var width = $(window).width();
+
+var widthMultiplier = 7;
+
+var heightMultiplier = 7;
+
+var distance = 30;
+
+// Put the parent of every 3D element
+var elements = ["#left", "#right"];
+
+$(document).ready(function() {
+
+	height = $(window).height();
+	width = $(window).width();
+
+    $(document).mousemove(function(event) {
+
+    	if (($("#chariz:hover").length != 0) | ($("#chariz-hover:hover").length != 0)) {
+    		$("#chariz").css('display', 'none');
+    		$("#chariz-hover").css('display', 'block');
+    	} else if (($("#havoc:hover").length != 0) | ($("#havoc-hover:hover").length != 0)) {
+    		$("#havoc").css('display', 'none');
+    		$("#havoc-hover").css('display', 'block');
+    	} else {
+    		$("#havoc").css('display', 'block');
+    		$("#havoc-hover").css('display', 'none');    
+    		$("#chariz").css('display', 'block');
+    		$("#chariz-hover").css('display', 'none');		
+    	}
+	    for (let element in elements) {
+
+			height = $(window).height();
+			width = $(window).width();
+
+			// Get mouse pos
+    		let currentMousePos = { x: -1, y: -1 };
+
+	        currentMousePos.x = event.pageX;
+	        currentMousePos.y = event.pageY;
+
+	        // Width
+	        let widthCenter = $(elements[element]).position().left + $(elements[element]).width() / 2; // + $(elements[element]).width() / 2
+
+	        let distFromWidthCenter = widthCenter - currentMousePos.x;
+
+	        let distFromWidthCenterDeg = ((distFromWidthCenter / (widthCenter + (widthMultiplier * 100))) * 100) * -0.5;
+	      
+	    	// Height
+	        let heightCenter = $(elements[element]).position().top + $(elements[element]).height() / 2; // + $(elements[element]).height() / 2
+
+	        let distFromHeightCenter = (heightCenter - currentMousePos.y) * -1;
+
+	        let distFromHeightCenterDeg = ((distFromHeightCenter / (heightCenter + (heightMultiplier * 100))) * 100) * -0.5;
+
+	        // Effect
+	    	$(elements[element] + "-back").css({
+			  '-webkit-transform' : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ')',
+			  '-moz-transform'    : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ')',
+			  '-ms-transform'     : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ')',
+			  '-o-transform'      : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ')',
+			  'transform'         : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ')',
+			});
+
+	    	if (elements[element] == "#left") {
+		    	$('#left-front').css({
+				  '-webkit-transform' : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  '-moz-transform'    : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  '-ms-transform'     : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  '-o-transform'      : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  'transform'         : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)'
+				});
+	    	} else if (elements[element] == "#right") {
+		    	$('#right-front').css({
+				  '-webkit-transform' : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  '-moz-transform'    : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  '-ms-transform'     : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  '-o-transform'      : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
+				  'transform'         : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)'
+				});
+			}
+		}
+
+    });
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

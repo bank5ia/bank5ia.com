@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2687px" height="2694px" viewBox="0 0 2687 2694" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Rectangle</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g filter="url(#filter-1)" id="Group">
+            <g transform="translate(366.758221, 857.104449)">
+                <path d="M230.901505,755.096712 L17.4758221,362.710592 C67.3086048,337.371334 120.561017,321.636552 177.233058,315.506246 C218.281792,311.065939 257.666389,311.065939 295.386847,315.506246" id="Path-2" stroke="#FFFFFF" stroke-width="100.443002"></path>
+                <path d="M0,969.791103 C281.276135,899.155384 602.168626,863.837524 962.677475,863.837524 C1323.18632,863.837524 1655.96372,899.155384 1961.00967,969.791103" id="Path-4" stroke="#FFFFFF" stroke-width="96.443002"></path>
+                <path d="M1765.13266,762.359768 L1943.31915,262.83418 C1800.76996,191.473382 1610.70437,203.366848 1373.12239,298.514579 C1135.54041,393.66231 981.112119,528.516489 909.837524,703.077117" id="Path-5" stroke="#FFFFFF" stroke-width="100.443002"></path>
+                <path d="M1060.4294,264.887497 C1011.35482,195.677492 925.324674,131.418977 802.338976,72.1119513 C679.353278,12.8049259 537.264786,-9.92019593 376.073501,3.93658569 L554.601127,715.62089" id="Path-6" stroke="#FFFFFF" stroke-width="100.443002"></path>
+            </g>
+        </g>
+    </g>
+</svg>
