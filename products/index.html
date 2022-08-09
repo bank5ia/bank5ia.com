@@ -39,6 +39,11 @@ body {
 	justify-content: center;
 	align-items: center;
 }
+
+img {
+	/*transition: 0.08s;*/
+}
+
 .container {
 	display: flex;
 	justify-content: center;
@@ -52,10 +57,15 @@ body {
 	position: absolute;
 }
 
-#left-front, #right-front {
+.background {
 	width: 200px;
 	height: 200px;
 	z-index: 2;
+	position: absolute;
+}
+
+#right-front, #left-front {
+	z-index: 4;
 }
 
 .outer-container {
@@ -110,11 +120,17 @@ body {
 #twitter:hover > a {
 	text-decoration: underline;
 }
+
 </style>
 <body>
 	<div class="outer-container">
 		<div class="container" id="left">
 			<img id="left-back" src="Assets/Sydney Background.svg" width="200" height="200">
+			<img id="left-front-1" class="background" src="Assets/Sydney Background Glyph.svg" width="200" height="200">
+			<img id="left-front-2" class="background" src="Assets/Sydney Background Glyph.svg" width="200" height="200">
+			<img id="left-front-3" class="background" src="Assets/Sydney Background Glyph.svg" width="200" height="200">
+			<img id="left-front-4" class="background" src="Assets/Sydney Background Glyph.svg" width="200" height="200">
+			<img id="left-front-5" class="background" src="Assets/Sydney Background Glyph.svg" width="200" height="200">
 			<img id="left-front" src="Assets/Sydney Glyph.svg" width="200" height="200">
 		</div>
 		<p class="product-title">Sydney</p>
@@ -125,6 +141,11 @@ body {
 	<div class="outer-container">
 		<div class="container" id="right">
 			<img id="right-back" src="Assets/iOSX Background.svg" width="200" height="200">
+			<img id="right-front-1" class="background" src="Assets/iOSX Background Glyph.png" width="200" height="200">
+			<img id="right-front-2" class="background" src="Assets/iOSX Background Glyph.png" width="200" height="200">
+			<img id="right-front-3" class="background" src="Assets/iOSX Background Glyph.png" width="200" height="200">
+			<img id="right-front-4" class="background" src="Assets/iOSX Background Glyph.png" width="200" height="200">
+			<img id="right-front-5" class="background" src="Assets/iOSX Background Glyph.png" width="200" height="200">
 			<img id="right-front" src="Assets/iOSX Glyph.png" width="200" height="200">
 		</div>
 		<p class="product-title">iOSX</p>
@@ -192,30 +213,46 @@ $(document).ready(function() {
 
 	        let distFromHeightCenterDeg = ((distFromHeightCenter / (heightCenter + (heightMultiplier * 100))) * 100) * -0.5;
 
-	        // Effect
+	        // Back
+	        // Create transformation string for back element
+	        let backTransString = 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translateZ(-10px)';
+	    	
+			// Apply transformations via CSS
 	    	$(elements[element] + "-back").css({
-			  '-webkit-transform' : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translateZ(-10px)',
-			  '-moz-transform'    : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translateZ(-10px)',
-			  '-ms-transform'     : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translateZ(-10px)',
-			  '-o-transform'      : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translateZ(-10px)',
-			  'transform'         : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translateZ(-10px)',
+			  '-webkit-transform' : backTransString,
+			  '-moz-transform'    : backTransString,
+			  '-ms-transform'     : backTransString,
+			  '-o-transform'      : backTransString,
+			  'transform'         : backTransString
 			});
 
-	    	if (elements[element] == "#left") {
-		    	$('#left-front').css({
-				  '-webkit-transform' : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  '-moz-transform'    : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  '-ms-transform'     : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  '-o-transform'      : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  'transform'         : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)'
-				});
-	    	} else if (elements[element] == "#right") {
-		    	$('#right-front').css({
-				  '-webkit-transform' : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  '-moz-transform'    : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  '-ms-transform'     : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  '-o-transform'      : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)',
-				  'transform'         : 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / distance * -1 + 'px, ' + distFromHeightCenter / distance + 'px)'
+	    	// Front
+			// Create transformation string for front element
+	    	let frontTransString = 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / (distance - 5 * 1.5) * -1 + 'px, ' + distFromHeightCenter / (distance - 5 * 1.5) + 'px) translateZ(1px)'; 
+
+	    	// Apply transformations via CSS
+	    	$(elements[element] + '-front').css({
+			  '-webkit-transform' : frontTransString,
+			  '-moz-transform'    : frontTransString,
+			  '-ms-transform'     : frontTransString,
+			  '-o-transform'      : frontTransString,
+			  'transform'         : frontTransString
+			});
+
+	    	// 3D
+			// Loop through 3D divs
+			for (let i = 1; i < 6; i++) {
+
+				// Create transformation string, different for each 3D div
+	    		let transformStr = 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translate(' + distFromWidthCenter / (distance - i * 1.5) * -1 + 'px, ' + distFromHeightCenter / (distance - i * 1.5) + 'px)';
+		    	
+		    	// Apply transformations via CSS
+		    	$(elements[element] + '-front-' + i).css({
+					'-webkit-transform' : transformStr,
+					'-moz-transform'    : transformStr,
+					'-ms-transform'     : transformStr,
+					'-o-transform'      : transformStr,
+					'transform'         : transformStr
 				});
 			}
 		}
