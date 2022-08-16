@@ -128,14 +128,14 @@ $(document).ready(function() {
 	height = $(window).height();
 	width = $(window).width();
 
-	// Get mouse pos
-    var currentMousePos = { x: -1, y: -1 };
-    $(document).mousemove(function(event) {
+	if (isSafari == true) {
+		$('#container').empty();
+    	$('#container').append("<h1>Please open this site in Google Chrome</h1>");
+    } else {
 
-    	if (isSafari == true) {
-    		$('#container').empty();
-	    	$('#container').append("<h1>Please open this site in Google Chrome</h1>");
-	    } else {
+		// Get mouse pos
+	    var currentMousePos = { x: -1, y: -1 };
+	    $(document).mousemove(function(event) {
     		// Get Window Size
 			height = $(window).height();
 			width = $(window).width();
@@ -217,8 +217,8 @@ $(document).ready(function() {
 				  'background' : 'conic-gradient(from ' + ((45 - distFromHeightCenter / 40) - distFromWidthCenter / 50) + 'deg, ' + rightDark + ' 0deg, #CACACA ' + (45 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 90deg, #CACACA ' + (135 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 180deg, #CACACA ' + (225 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 270deg, #CACACA ' + (315 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 360deg)'
 				});    		
 	    	}
-	    }
-    });
+	    });
+   	} 
 });
 </script>
 </body>
