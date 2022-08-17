@@ -33,16 +33,43 @@ html {
 	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+h1, h2, h3 {
+	text-align: center;
+	width: 100%;
+	padding: 10px;
+	cursor: default;
+}
+
+p {
+	cursor: default;
+}
+
+h1 {
+	font-size: 50px;
+	font-weight: 500;
+}
+
+h3 {
+	font-size: 20px;
+	font-weight: 500;
+}
+
 #container {
 	width: 100%;
-	height: 100vh;
+	height: calc(400px);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	perspective: 600px;
-	will-change: transform, backdrop-filter, mix-blend-mode;
 }
-#front, .back, #blur, #overlay, #card {
+
+#front, .back, #front-outer, #overlay, #card {
 	width: 425px;
 	height: 300px;
 	border-radius: 20px;
@@ -60,16 +87,19 @@ html {
 		hsl(0, 0%, 48%) 270deg,
 		#CACACA 315deg,
 		hsl(0, 0%, 48%) 360deg);
+	filter: blur(5px);
+	-webkit-filter: blur(5px);
+	z-index: 1;
+	will-change: filter;
+	transform: scale(1.2);
 }
 
 .back {
 	background-color: #AAAAAA;
 }
 
-#blur {
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
-	z-index: 2;
+#front-outer {
+	-webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
 }
 
 #overlay {
@@ -83,24 +113,65 @@ html {
 }
 
 #card {
-	outline: rgba(255, 255, 255, 0.8) solid 1px;
+	border: rgba(255, 255, 255, 0.8) solid 1px;
+	box-sizing: border-box;
 	display: flex;
 	align-items: left;
 	z-index: 4;
 	transform: translateZ(1px);
 }
-</style>
-<body>
-	<div id="container">
 
-		<div id="front"></div>
-		<div id="blur"></div>
-		<div id="overlay"></div>
-		<div id="card">
-			<p style="font-size: 17px; margin-left: 20px; margin-top: calc(300px - 40px);"><a style="letter-spacing: 3px;">••••</a> 1234</p>
-			<img style="margin-left: 205px; margin-top: 215px" src="mastercard.svg" width="100" height="75"></img>
+.product-button {
+	cursor: pointer;
+	margin-top: 30px;
+}
+
+#outer-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#twitter {
+	position: fixed;
+	bottom: 25px;
+	left: calc(100% - 150px);
+	font-size: 14px;
+	font-weight: 400;
+	cursor: pointer;
+	opacity: 0.1;
+}
+
+#twitter > a {
+	text-decoration: none;
+	color: inherit;
+}
+
+#twitter:hover > a {
+	text-decoration: underline;
+}
+
+</style>
+<body onload="updateCard();">
+	<div id="outer-container">
+		<div id="container">
+
+			<div id="front-outer">
+				<div id="front"></div>
+			</div>
+			<div id="overlay"></div>
+			<div id="card">
+				<p style="font-size: 17px; margin-left: 20px; margin-top: calc(300px - 40px);"><a style="letter-spacing: 3px;">&bull;&bull;&bull;&bull;</a> 1234</p>
+				<img style="margin-left: 205px; margin-top: 215px" src="mastercard.svg" width="100" height="75"></img>
+			</div>
 		</div>
+		<h1>Sydney</h1>
+		<h3><i>New feature coming soon</i></h3>
+		<a id="chariz-hover" class="product-button" style="display: none;" href="https://chariz.com/get/sydney"><img src="chariz-hover.svg" width="200" height="73"></a>
+		<a id="chariz" class="product-button" href="https://chariz.com/get/sydney"><img src="chariz.svg" width="200" height="73">
 	</div>
+	<div id="twitter"><a href="https://twitter.com/bank5ia"><i>follow me on twitter</i></a></div>
 
 <script type="text/javascript">
 
@@ -123,102 +194,107 @@ var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
                    navigator.userAgent.indexOf('CriOS') == -1 &&
                    navigator.userAgent.indexOf('FxiOS') == -1;
 
-$(document).ready(function() {
+var currentMousePos = { x: 1, y: 1 };
 
+function updateCard() {
+
+	// Get window height
 	height = $(window).height();
 	width = $(window).width();
 
-	if (isSafari == true) {
-		$('#container').empty();
-    	$('#container').append("<h1>Please open this site in Google Chrome</h1>");
-    } else {
+	// Chariz button hover 
+   	if (($("#chariz:hover").length != 0) | ($("#chariz-hover:hover").length != 0)) {
+		$("#chariz").css('display', 'none');
+		$("#chariz-hover").css('display', 'block');
+	} else if (($("#havoc:hover").length != 0) | ($("#havoc-hover:hover").length != 0)) {
+		$("#havoc").css('display', 'none');
+		$("#havoc-hover").css('display', 'block');
+	} else {
+		$("#havoc").css('display', 'block');
+		$("#havoc-hover").css('display', 'none');    
+		$("#chariz").css('display', 'block');
+		$("#chariz-hover").css('display', 'none');		
+	}
 
-		// Get mouse pos
-	    var currentMousePos = { x: -1, y: -1 };
-	    $(document).mousemove(function(event) {
-    		// Get Window Size
-			height = $(window).height();
-			width = $(window).width();
+	// Get Window Size
+	height = $("#container").height();
+	width = $("#container").width();
 
-			// Get mouse position (Starting from top, left)
-	        currentMousePos.x = event.pageX;
-	        currentMousePos.y = event.pageY;
+	// Get mouse position (Starting from top, left)
+    currentMousePos.x = event.pageX;
+    currentMousePos.y = event.pageY;
+    console.log(event.pageX, event.pageY);
 
-	        // Width Data
-		        // X-Axis Center
-		        widthCenter = width / 2;
+    // Width Data
+        // X-Axis Center
+        widthCenter = $("#container").position().left + $("#container").width() / 2; 
 
-		        // Mouse distance from X-Axis Center
-		        distFromWidthCenter = widthCenter - currentMousePos.x;
+        // Mouse distance from X-Axis Center
+        distFromWidthCenter = widthCenter - currentMousePos.x;
 
-				// Distance from X-Axis center in degrees (Used for rotation)
-		        distFromWidthCenterDeg = (distFromWidthCenter / (widthCenter + (widthMultiplier * 100))) * -100; 
-	      
-	    	// Height Data
-		    	// Y-Axis Center
-		        heightCenter = height / 2;
+		// Distance from X-Axis center in degrees (Used for rotation)
+        distFromWidthCenterDeg = (distFromWidthCenter / (widthCenter + (widthMultiplier * 100))) * -100; 
+  
+	// Height Data
+    	// Y-Axis Center
+        heightCenter = $("#container").position().top + $("#container").height() / 2;
 
-		        // Mouse distance from Y-Axis Center
-		        distFromHeightCenter = (heightCenter - currentMousePos.y) * -1;
+        // Mouse distance from Y-Axis Center
+        distFromHeightCenter = (heightCenter - currentMousePos.y) * -1;
 
-		        // Distance from Y-Axis center in degrees (Used for rotation)
-		        distFromHeightCenterDeg = (distFromHeightCenter / (heightCenter + (heightMultiplier * 100))) * -100;
+        // Distance from Y-Axis center in degrees (Used for rotation)
+        distFromHeightCenterDeg = (distFromHeightCenter / (heightCenter + (heightMultiplier * 200))) * -100;
 
 
-		    // Create 3D transformation string for front div
-	        transformation = 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') translateZ(1px)';
+    // Create 3D transformation string for front div
+    transformation = 'rotateY(' + distFromWidthCenterDeg + 'deg' + ') ' + 'rotateX(' + distFromHeightCenterDeg + 'deg' + ') ';
 
-	        // Apply 3D transformations
-	        $('#front').css({
-				'-webkit-transform' : transformation,
-				'-moz-transform'    : transformation,
-				'-ms-transform'     : transformation,
-				'-o-transform'      : transformation,
-				'transform'         : transformation,
-			});
+    // Apply 3D transformations
+    $('#front-outer').css({
+		'-webkit-transform' : transformation,
+		'-moz-transform'    : transformation,
+		'-ms-transform'     : transformation,
+		'-o-transform'      : transformation,
+		'transform'         : transformation,
+	});
 
-	        $('#blur').css({
-				'-webkit-transform' : transformation,
-				'-moz-transform'    : transformation,
-				'-ms-transform'     : transformation,
-				'-o-transform'      : transformation,
-				'transform'         : transformation,
-			});
+    $('#overlay').css({
+		'-webkit-transform' : transformation + 'translateZ(1px)',
+		'-moz-transform'    : transformation + 'translateZ(1px)',
+		'-ms-transform'     : transformation + 'translateZ(1px)',
+		'-o-transform'      : transformation + 'translateZ(1px)',
+		'transform'         : transformation + 'translateZ(1px)',
+	});
 
-	        $('#overlay').css({
-				'-webkit-transform' : transformation,
-				'-moz-transform'    : transformation,
-				'-ms-transform'     : transformation,
-				'-o-transform'      : transformation,
-				'transform'         : transformation,
-			});
+    $('#card').css({
+		'-webkit-transform' : transformation + 'translateZ(1.1px)',
+		'-moz-transform'    : transformation + 'translateZ(1.1px)',
+		'-ms-transform'     : transformation + 'translateZ(1.1px)',
+		'-o-transform'      : transformation + 'translateZ(1.1px)',
+		'transform'         : transformation + 'translateZ(1.1px)',
+	});
 
-	        $('#card').css({
-				'-webkit-transform' : transformation,
-				'-moz-transform'    : transformation,
-				'-ms-transform'     : transformation,
-				'-o-transform'      : transformation,
-				'transform'         : transformation,
-			});
+    // Change gradient colours based on 3D direction
+	leftDark = 'hsl(0, 0%, ' + (48 - distFromWidthCenter / 40) + '%)';
+   	rightDark = 'hsl(0, 0%, ' + (48 - (distFromWidthCenter / 40) * -1) + '%)';
 
-	        // Change gradient colours based on 3D direction
-	    	leftDark = 'hsl(0, 0%, ' + (48 - distFromWidthCenter / 40) + '%)';
-	       	rightDark = 'hsl(0, 0%, ' + (48 - (distFromWidthCenter / 40) * -1) + '%)';
+   	// Check if mouse is above or below X-Axis
+    if (distFromHeightCenter < 0) { // Above
 
-	       	// Check if mouse is above or below X-Axis
-	        if (distFromHeightCenter < 0) { // Above
+    	$('#front').css({
+		  'background' : 'conic-gradient(from ' + ((45 - distFromHeightCenter / 40) - distFromWidthCenter / 50) + 'deg, ' + rightDark + ' 0deg, #CACACA ' + (45 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 90deg, #CACACA ' + (135 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 180deg, #CACACA ' + (225 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 270deg, #CACACA ' + (315 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 360deg)'
+		});
+	} else { // Below
+		
+    	$('#front').css({
+		  'background' : 'conic-gradient(from ' + ((45 - distFromHeightCenter / 40) - distFromWidthCenter / 50) + 'deg, ' + rightDark + ' 0deg, #CACACA ' + (45 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 90deg, #CACACA ' + (135 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 180deg, #CACACA ' + (225 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 270deg, #CACACA ' + (315 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 360deg)'
+		});    		
+	}		
+}
 
-		    	$('#front').css({
-				  'background' : 'conic-gradient(from ' + ((45 - distFromHeightCenter / 40) - distFromWidthCenter / 50) + 'deg, ' + rightDark + ' 0deg, #CACACA ' + (45 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 90deg, #CACACA ' + (135 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 180deg, #CACACA ' + (225 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 270deg, #CACACA ' + (315 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 360deg)'
-				});
-	    	} else { // Below
-	    		
-		    	$('#front').css({
-				  'background' : 'conic-gradient(from ' + ((45 - distFromHeightCenter / 40) - distFromWidthCenter / 50) + 'deg, ' + rightDark + ' 0deg, #CACACA ' + (45 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 90deg, #CACACA ' + (135 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 180deg, #CACACA ' + (225 - (distFromWidthCenter / 60) * 1) + 'deg, ' + leftDark + ' 270deg, #CACACA ' + (315 - (distFromWidthCenter / 30) * -1) + 'deg, ' + rightDark + ' 360deg)'
-				});    		
-	    	}
-	    });
-   	} 
+// Update card on mouse move  
+$(document).mousemove(function(event) {
+	updateCard();
 });
 </script>
 </body>
